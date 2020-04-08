@@ -129,4 +129,6 @@ dmypy.json
 .pyre/
 training_ws/devel/
 training_ws/build/
+dep_ws/build/
+dep_ws/devel/
 
