@@ -1,2 +1,2 @@
-int8 reward
-int8 episode
+int64 reward
+int64 episode
