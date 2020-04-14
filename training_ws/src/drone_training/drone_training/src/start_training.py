@@ -19,6 +19,7 @@ import rospkg
 
 # import our training environment
 import myquadcopter_env
+from drone_training.msg import RewardInfo 
 
 
 if __name__ == '__main__':
@@ -47,6 +48,9 @@ if __name__ == '__main__':
     epsilon_discount = rospy.get_param("/epsilon_discount")
     nepisodes = rospy.get_param("/nepisodes")
     nsteps = rospy.get_param("/nsteps")
+
+
+    pub = rospy.Publisher('/openai/reward', RewardInfo,queue_size = 10)
 
     # Initialises the algorithm that we are going to use for learning
     qlearn = qlearn.QLearn(actions=range(env.action_space.n),
@@ -99,8 +103,12 @@ if __name__ == '__main__':
         m, s = divmod(int(time.time() - start_time), 60)
         h, m = divmod(m, 60)
         rospy.loginfo ( ("EP: "+str(x+1)+" - [alpha: "+str(round(qlearn.alpha,2))+" - gamma: "+str(round(qlearn.gamma,2))+" - epsilon: "+str(round(qlearn.epsilon,2))+"] - Reward: "+str(cumulated_reward)+"     Time: %d:%02d:%02d" % (h, m, s)))
+        
+        rewardInfo = RewardInfo()
+        rewardInfo.episode = x+1
+        rewardInfo.reward = cumulated_reward
+        pub.publish(rewardInfo)
 
-    
     rospy.loginfo ( ("\n|"+str(nepisodes)+"|"+str(qlearn.alpha)+"|"+str(qlearn.gamma)+"|"+str(initial_epsilon)+"*"+str(epsilon_discount)+"|"+str(highest_reward)+"| PICTURE |"))
 
     l = last_time_steps.tolist()

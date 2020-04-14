@@ -5,6 +5,7 @@ import numpy as np
 print np.__file__
 print np.__version__
 import os
+from gym.wrappers.monitor import Monitor 
 import gym
 
 import matplotlib
@@ -13,6 +14,7 @@ import itertools
 import sys
 import argparse
 import rospkg
+# import myquadcopter_env
 
 from scipy.interpolate import pchip
 
@@ -40,7 +42,11 @@ class LivePlot(object):
         matplotlib.rcParams.update({'font.size': 15})
 
     def plot(self, full=True, dots=False, average=0, interpolated=0):
+        # env = gym.make('QuadcopterLiveShow-v0')
+        # env =  gym.wrappers.Monitor(env, "./vid")
+        # env =  gym.wrappers.Monitor()
         results = gym.monitoring.load_results(self.outdir)
+
         data =  results[self.data_key]
         avg_data = []
 
