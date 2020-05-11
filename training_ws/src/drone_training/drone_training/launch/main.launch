@@ -11,5 +11,5 @@
     <rosparam command="load" file="$(find drone_training)/config/qlearn_params.yaml" />
 
     <!-- Launch the training system -->
-    <node pkg="drone_training" name="gym_train" type="start_training.py" output="screen"/> 
+    <node pkg="drone_training" name="gym_train" type="start_training_dqn.py" output="screen"/> 
 </launch>

@@ -1,40 +1,40 @@
 # Algortihm Parameters
-alpha: 0.1
-gamma: 0.8
-epsilon: 0.9
-epsilon_discount: 0.999 # 1098 eps to reach 0.1
-nepisodes: 100
-nsteps: 100
+alpha: 0.01
+gamma: 0.6
+epsilon: 0.995
+epsilon_discount: 0.998 
+nepisodes: 6000
+nsteps: 3000
 
 # Environment Parameters
 desired_poses:
     x1: -1.6
-    y1: 2.90 
+    y1: 2.2
     z1: 2.0 
-    x2: 2.5 
-    y2: -1.2 
+    x2: 2.33 
+    y2: -1.14
     z2: 2.0 
     x3: 5.7 
-    y3: 3.1 
+    y3: 2.29 
     z3: 2.0 
-    x4: 2.6 
+    x4: 2.0
     y4: 6.1 
     z4: 2.0
 
-max_altitude: 2.8   # in meters
+max_altitude: 3     # in meters
 max_incl: 0.7       # in rads
 speed_value: 1.0    # in m/s
 running_step: 0.3   # in seconds
-min_x: -2.5
-max_x: 6
+min_x: -2.7
+max_x: 7
 min_y: -2.5
-max_y: 7
+max_y: 7.3
 
-forward_reward: 20
-turn_reward: 3
+forward_reward: 1
+turn_reward: 1.5
 up_reward: 1
-down_reward: 1
-goal_reward: 200
+down_reward: 1.5
+goal_reward: 2000
 
 
 

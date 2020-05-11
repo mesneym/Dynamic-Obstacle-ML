@@ -49,7 +49,6 @@ if __name__ == '__main__':
     nepisodes = rospy.get_param("/nepisodes")
     nsteps = rospy.get_param("/nsteps")
 
-
     pub = rospy.Publisher('/openai/reward', RewardInfo,queue_size = 10)
 
     # Initialises the algorithm that we are going to use for learning
@@ -71,7 +70,7 @@ if __name__ == '__main__':
         
         # Initialize the environment and get first state of the robot
         observation = env.reset()
-        state = ''.join(map(str, observation))
+        state = ','.join(map(str, observation))
         
         # Show on screen the actual situation of the robot
         #env.render()
@@ -88,7 +87,7 @@ if __name__ == '__main__':
             if highest_reward < cumulated_reward:
                 highest_reward = cumulated_reward
 
-            nextState = ''.join(map(str, observation))
+            nextState = ','.join(map(str, observation))
 
             # Make the algorithm learn based on the results
             qlearn.learn(state, action, reward, nextState)
@@ -119,3 +118,4 @@ if __name__ == '__main__':
     rospy.loginfo("Best 100 score: {:0.2f}".format(reduce(lambda x, y: x + y, l[-100:]) / len(l[-100:])))
 
     env.close()
+

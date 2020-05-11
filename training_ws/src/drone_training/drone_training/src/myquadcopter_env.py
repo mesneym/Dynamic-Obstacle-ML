@@ -105,6 +105,7 @@ class QuadCopterEnv(gym.Env):
         
         # 5th: pauses simulation
         self.gazebo.pauseSim()
+        self.reward_checked = [False, False, False, False]
 
         return observation
 
