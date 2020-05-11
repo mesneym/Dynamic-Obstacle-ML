@@ -172,10 +172,10 @@ is given below.
  Reward     & Values\\
  \hline
  forward   & 1\\
- turn&   1\\
+ turn&   1.5\\
  up&1\\
- down&1\\
- goal& 300  \\
+ down&1.5\\
+ goal& 2000  \\
  \hline
 \end{tabular}
 \end{table}
@@ -202,8 +202,19 @@ where,
 Qlearning works with discrete state and action spaces. To apply qlearning to our problem, we discretize the continous state space 
 apply the update rule shown above.
 
-\subsubsection{Policy, Steps  And Episodes}
+\subsubsection{Hyperparameters}
+\begin{itemize}
+  \item \textbf{alpha}: 0.01 - Small learning rate to ensure convergence
+  \item \textbf{gamma}: 0.6 - Fairly big discount factor as the drone can easily recover from bad orientations. 
+    No need for heavy dependence on future rewards.
+  \item \textbf{epsilon}: 0.995 - More exploration in the beginning  
+  \item \textbf{epsilon\_discount}: 0.998  - Exploration should last for several episodes. Need 1000 episodes to reach an epsilon value 
+    of about 0.1
+\end{itemize}
 
+\subsubsection{Policy, Steps  And Episodes}
+Qlearning was applied to the problem and the drone was trained using \textbf{epsilon-greedy policy} for about \textbf{1000 episodes} and 
+\textbf{700 steps}.
 
 \subsubsection{Qlearning Results}
 \begin{figure}[h]
@@ -283,9 +294,15 @@ The network was trained with two hidden units. The properties are tabulated belo
 
 Explanation
 
-\subsubsection{Policy and Episodes}
+\subsubsection{Policy, Steps and Episodes}
 \subsubsection{Hyperparameters}
 \subsection{Results}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=10cm]{epsilon_decay}
+    \caption{epsilon decay}
+    \label{fig:3D environment created in matplotlib}
+\end{figure}
 
 \subsection{Tools Used}
 \begin{itemize}
@@ -307,7 +324,6 @@ We plan to continue working on the problem trying out different reinforcement le
 dynamic obstacles and include sensing capability of the drone in the learning process- that is, camera and lidar. Then we create a suitable
 environment with a slightly more complex goal and examine how well the drone learns.
 \section{Bibliography}
-https://github.com/keon/deep-q-learning/blob/master/dqn.py} \\
 https://github.com/keon/deep-q-learning/blob/master/dqn.py \\
 https://www.theconstructsim.com/how-to-launch-drone-simulation-locally \\
 http://wiki.ros.org/openai\_ros
