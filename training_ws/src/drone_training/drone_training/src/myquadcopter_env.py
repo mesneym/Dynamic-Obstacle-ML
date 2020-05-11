@@ -19,7 +19,7 @@ from gazebo_connection import GazeboConnection
 reg = register(
     id='QuadcopterLiveShow-v0',
     entry_point='myquadcopter_env:QuadCopterEnv',
-    max_episode_steps=100,
+    max_episode_steps=5000,
     # timestep_limit=100,
     )
 
@@ -45,16 +45,17 @@ class QuadCopterEnv(gym.Env):
         desired_pose1.position.x = rospy.get_param("/desired_poses/x1")
         desired_pose1.position.y = rospy.get_param("/desired_poses/y1")
         desired_pose2.position.z = rospy.get_param("/desired_poses/z2")
-        desired_pose2.position.z = rospy.get_param("/desired_poses/x2")
-        desired_pose2.position.z = rospy.get_param("/desired_poses/y2")
-        desired_pose3.position.x = rospy.get_param("/desired_poses/z3")
-        desired_pose3.position.y = rospy.get_param("/desired_poses/x3")
-        desired_pose3.position.x = rospy.get_param("/desired_poses/y3")
-        desired_pose4.position.y = rospy.get_param("/desired_poses/z4")
+        desired_pose2.position.x = rospy.get_param("/desired_poses/x2")
+        desired_pose2.position.y = rospy.get_param("/desired_poses/y2")
+        desired_pose3.position.z = rospy.get_param("/desired_poses/z3")
+        desired_pose3.position.x = rospy.get_param("/desired_poses/x3")
+        desired_pose3.position.y = rospy.get_param("/desired_poses/y3")
+        desired_pose4.position.z = rospy.get_param("/desired_poses/z4")
         desired_pose4.position.x = rospy.get_param("/desired_poses/x4")
         desired_pose4.position.y = rospy.get_param("/desired_poses/y4")
 
         self.desired_poses = [desired_pose1,desired_pose2,desired_pose3,desired_pose4]
+        self.reward_checked = [False, False, False, False]
 
         self.forward_reward = rospy.get_param("/forward_reward")
         self.turn_reward = rospy.get_param("/turn_reward")
@@ -99,7 +100,8 @@ class QuadCopterEnv(gym.Env):
 
         # 4th: takes an observation of the initial condition of the robot
         data_pose, data_imu = self.take_observation()
-        observation = [data_pose.position.x]
+        observation = [data_pose.position.x,data_pose.position.y,data_pose.position.z, \
+                       data_imu.orientation.x,data_imu.orientation.y,data_imu.orientation.z]
         
         # 5th: pauses simulation
         self.gazebo.pauseSim()
@@ -142,7 +144,7 @@ class QuadCopterEnv(gym.Env):
 
         # Promote going forwards instead if turning
         if action == 0:
-            reward += self.forward_reward 
+            reward -= self.forward_reward 
         elif action == 1 or action == 2:
             reward -= self.turn_reward 
         elif action == 3:
@@ -150,7 +152,9 @@ class QuadCopterEnv(gym.Env):
         else:
             reward -= self.down_reward
 
-        state = [data_pose.position.x]
+        state = [data_pose.position.x,data_pose.position.y,data_pose.position.z, \
+                 data_imu.orientation.x,data_imu.orientation.y,data_imu.orientation.z]
+
         return state, reward, done, {}
 
 
@@ -171,15 +175,6 @@ class QuadCopterEnv(gym.Env):
         
         return data_pose, data_imu
 
-    def calculate_dist(self,p_init,p_ends):
-        a = np.array((p_init.x, p_init.y, p_init.z))
-        mindist = np.inf
-        for p_end in p_ends:
-            b = np.array((p_end.position.x,p_end.position.y,p_end.position.z))
-            dist = np.linalg.norm(a-b)
-            if(dist<mindist):
-                mindist = dist 
-        return mindist 
 
 
     def init_desired_pose(self):
@@ -188,7 +183,6 @@ class QuadCopterEnv(gym.Env):
     
 
     def check_topic_publishers_connection(self):
-        
         rate = rospy.Rate(10) # 10hz
         while(self.takeoff_pub.get_num_connections() == 0):
             rospy.loginfo("No susbribers to Takeoff yet so we wait and try again")
@@ -219,23 +213,44 @@ class QuadCopterEnv(gym.Env):
         time.sleep(seconds_taking_off)
         rospy.loginfo( "Taking-Off sequence completed")
         
+    
+    def distance(self,p_init,p_end):
+        a = np.array((p_init.x, p_init.y, p_init.z))
+        b = np.array((p_end.position.x,p_end.position.y,p_end.position.z))
+        dist = np.linalg.norm(a-b)
+        return dist 
+
+    def calculate_dist(self,p_init,p_ends):
+        a = np.array((p_init.x, p_init.y, p_init.z))
+        mindist = np.inf
+        for p_end in p_ends:
+            b = np.array((p_end.position.x,p_end.position.y,p_end.position.z))
+            dist = np.linalg.norm(a-b)
+            if(dist<mindist):
+                mindist = dist 
+        return mindist 
 
     def improved_distance_reward(self, current_pose):
         current_dist = self.calculate_dist(current_pose.position, self.desired_poses)
         #rospy.loginfo("Calculated Distance = "+str(current_dist))
-        
-        if current_dist < self.best_dist:
-            reward = 100
-            self.best_dist = current_dist
-        elif current_dist == self.best_dist:
-            reward = 0
+        threshold = 0.5
+
+        for i in range(4):
+             if(self.distance(current_pose.position,self.desired_poses[i]) <= threshold and not self.reward_checked[i]):
+                 reward = self.goal_reward
+                 self.reward_checked[i] = True
+
+                 for j in range(4):
+                     if(j != i):
+                         self.reward_checked[j] = False
+                 break
         else:
-            reward = -100
+            reward = -1
             #print "Made Distance bigger= "+str(self.best_dist)
         return reward
-        
-    def process_data(self, data_position, data_imu):
+       
 
+    def process_data(self, data_position, data_imu):
         done = False
         
         euler = tf.transformations.euler_from_quaternion([data_imu.orientation.x,data_imu.orientation.y,data_imu.orientation.z,data_imu.orientation.w])
@@ -250,10 +265,11 @@ class QuadCopterEnv(gym.Env):
                        data_position.position.x > self.max_x or data_position.position.y > self.max_y
                  
         if altitude_bad or pitch_bad or roll_bad or position_bad:
-            rospy.loginfo ("(Drone flight status is wrong) >>> ("+str(altitude_bad)+","+str(pitch_bad)+","+str(roll_bad)+")")
+            rospy.loginfo ("(Drone flight status is wrong) >>> ("+str(altitude_bad)+","+str(pitch_bad)+","+str(roll_bad)+"," + str(position_bad) +")")
             done = True
-            reward = -200
+            reward = -100
         else:
             reward = self.improved_distance_reward(data_position)
 
         return reward,done
+
