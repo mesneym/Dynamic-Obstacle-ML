@@ -268,7 +268,7 @@ sampled and used in updating the weights.
 
 
 \subsubsection{Architecture} 
-The network was trained with two hidden units. The properties are tabulated below
+The network was trained with two hidden units. The properties are tabulated below. The values were attained through trial and error.
 
 \begin{table}[h]
   \centering
@@ -279,9 +279,9 @@ The network was trained with two hidden units. The properties are tabulated belo
  Layers     & Units & Activation Function \\
  \hline
  Input layer  & state space dim & $-$ \\
- First layer  & 1 & relu \\
- Second layer & 1 & relu \\
- Output layer & action space dim & $-$ \\
+ First layer  & 60 & relu \\
+ Second layer & 75 & relu \\
+ Output layer & action space dim & linear \\
  \hline
  \multicolumn{3}{|c|}{Other Properties} \\
  \hline
@@ -292,10 +292,20 @@ The network was trained with two hidden units. The properties are tabulated belo
 \end{tabular}
 \end{table}
 
-Explanation
 
+\newpage
 \subsubsection{Policy, Steps and Episodes}
+Qlearning was applied to the problem and the drone was trained using \textbf{epsilon-greedy policy} for about \textbf{6000 episodes} and 
+\textbf{3000 steps}.
 \subsubsection{Hyperparameters}
+\begin{itemize}
+  \item \textbf{alpha}: 0.01 - Small learning rate to ensure convergence
+  \item \textbf{gamma}: 0.6 - Fairly big discount factor as the drone can easily recover from bad orientations. 
+    No need for heavy dependence on future rewards.
+  \item \textbf{epsilon}: 0.995 - More exploration in the beginning  
+  \item \textbf{epsilon\_discount}: 0.998  - Exploration should last for several episodes. Need 1000 episodes to reach an epsilon value 
+    of about 0.1
+\end{itemize}
 \subsection{Results}
 \begin{figure}[h]
     \centering
