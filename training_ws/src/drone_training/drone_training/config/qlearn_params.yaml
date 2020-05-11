@@ -2,9 +2,9 @@
 alpha: 0.01
 gamma: 0.6
 epsilon: 0.995
-epsilon_discount: 0.998 
+epsilon_discount: 0.992
 nepisodes: 6000
-nsteps: 3000
+nsteps: 1000
 
 # Environment Parameters
 desired_poses:
@@ -31,8 +31,8 @@ min_y: -2.5
 max_y: 7.3
 
 forward_reward: 1
-turn_reward: 1.5
-up_reward: 1
+turn_reward: 1.2
+up_reward: 1.2
 down_reward: 1.5
 goal_reward: 2000
 

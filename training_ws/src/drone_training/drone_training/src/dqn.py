@@ -16,7 +16,7 @@ class DQNAgent():
         self.action_size = action_size                                                #action space
         self.state_size = state_size                                                  #state space
 
-        self.memory = deque(maxlen=100000)                                            #memory to store (s,r,s',a')
+        self.memory = deque(maxlen=50000)                                             #memory to store (s,r,s',a')
 
         self.gamma = gamma                                                            #discount factor
 
@@ -29,7 +29,7 @@ class DQNAgent():
 
         self.model = Sequential()                                                     #NN model
         self.model.add(Dense(60, input_dim=self.state_size, activation='relu'))
-        self.model.add(Dense(75, activation='relu'))
+        self.model.add(Dense(85, activation='relu'))
         self.model.add(Dense(self.action_size, activation='linear'))
         self.model.compile(loss='mse', optimizer=Adam(lr=self.alpha, decay=self.alpha_decay))
         

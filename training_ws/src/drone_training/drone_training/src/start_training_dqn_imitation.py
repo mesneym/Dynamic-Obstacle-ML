@@ -28,9 +28,20 @@ def print_status(start_time,alpha,gamma,reward,epsilon,episode_number):
                        str(round(epsilon,2))+"] - Reward: "+str(reward)+ "     Time: %d:%02d:%02d" % (h, m, s))) 
 
 
+def takeInput(x,state):
+    action = 0
+    if(x<10):
+       action = agent.choose_action(state,agent.get_epsilon(x))          #agent takes an action
+    else:
+        #take input from user
+        pass
+    return action
+
+
 if __name__=='__main__':
     rospy.init_node('drone_gym', anonymous=True)                          #Initialize Node
     pub = rospy.Publisher('/openai/reward', RewardInfo,queue_size = 10)   #setting reward
+
 
     env = gym.make('QuadcopterLiveShow-v0')                               #Create the Gym environment
     rospy.loginfo ( "Gym environment done")
@@ -73,7 +84,8 @@ if __name__=='__main__':
          # i = 1
          # while not done:
          for i in range(nsteps):                 
-             action = agent.choose_action(state,agent.get_epsilon(x))          #agent takes an action
+             # action = agent.choose_action(state,agent.get_epsilon(x))          #agent takes an action
+             action = takeInput(x,state)
 
              observation,reward,done,info = env.step(action)                   #make observation and update reward and retrieve
              next_state = agent.preprocess_state(observation) 

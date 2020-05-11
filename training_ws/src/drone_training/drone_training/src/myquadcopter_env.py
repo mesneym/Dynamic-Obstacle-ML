@@ -234,7 +234,7 @@ class QuadCopterEnv(gym.Env):
     def improved_distance_reward(self, current_pose):
         current_dist = self.calculate_dist(current_pose.position, self.desired_poses)
         #rospy.loginfo("Calculated Distance = "+str(current_dist))
-        threshold = 0.5
+        threshold = 0.75
 
         for i in range(4):
              if(self.distance(current_pose.position,self.desired_poses[i]) <= threshold and not self.reward_checked[i]):
