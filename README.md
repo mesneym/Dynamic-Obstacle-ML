@@ -40,10 +40,12 @@ rosrun rqt_multiplot rqt_multiplot
 Add a curve and select the topic <b>\openai\_reward</b>
 
 ## Sample outputs:
+TO BE DONE
+Work is still in progress
 ```
-### 
-Here are the sample output obtained by running the code:
+<!--### -->
+<!--Here are the sample output obtained by running the code:-->
 
-![](gif/rrt.gif)
-![](gif/rrt2.gif)
+<!--![](gif/rrt.gif)-->
+<!--![](gif/rrt2.gif)-->
 
