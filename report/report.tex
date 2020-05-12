@@ -307,23 +307,38 @@ Qlearning was applied to the problem and the drone was trained using \textbf{eps
     of about 0.1
 \end{itemize}
 \subsection{Results}
-\begin{figure}[h]
+Shown below are the results obtained using deep-q learning
+\begin{figure}[H]
     \centering
     \includegraphics[width=10cm]{epsilon_decay}
     \caption{epsilon decay}
     \label{fig:3D environment created in matplotlib}
 \end{figure}
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=10cm]{deepqn.png}
+    \caption{Deep-q Learning}
+    \label{fig:3D environment created in matplotlib}
+\end{figure}
+
+\newpage
 \subsection{Tools Used}
 \begin{itemize}
   \item ROS -Kinetic
   \item Gazebo 
   \item Openai-gym - The robot was trained using openai library
   \item Openai-ros - Openai ros makes interfacing robots in ros with easy. Refer to ros wiki for tutorials. 
-  \item Deep Neural Network - The code utilized keras which utilized tensor flow backend and starter deep qlearning code 
-    from \href{https://github.com/keon/deep-q-learning/blob/master/dqn.py}{Keon-Deep Qlearning}
+  \item Deep Neural Network - The code utilized keras which utilized tensor flow backend.
 \end{itemize}
-\section{Analysis}
+\section{Analysis and Challenges}
+Clearly the graph shown above for deep qlearning is slightly better than qlearning. The reason for  the steep 
+negative rewards is that sometimes the drone gets stuck in some situations. For example, the drone sometimes getsstuck beneath the square hole  and it takes a really long time to get out of that situation.
+
+Several days was spent training the drone. Ros was extremely slow and coupled with how slow my machine was,
+this made the training process even much slower. The obvious decision was to train on the cloud but interfacing
+openai-gym with ros had a lot of dependencies and as a result couldn't train much longer.
+
 \section{Conclusions}
 Clearly, it can be noted that, deep qlearning outperforms qlearning when the state space is big and continuous. Qlearning is much more useful
 when both action space and state space are discrete and small. Depending on the type of problem, we can switch to different types of learning

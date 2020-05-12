@@ -170,6 +170,9 @@ INPUT ./images/qlearn.png
 INPUT images/epsilon_decay.png
 INPUT ./images/epsilon_decay.png
 INPUT ./images/epsilon_decay.png
+INPUT images/deepqn.png
+INPUT ./images/deepqn.png
+INPUT ./images/deepqn.png
 INPUT report.aux
 INPUT ./report.out
 INPUT ./report.out

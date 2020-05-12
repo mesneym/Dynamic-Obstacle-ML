@@ -1,5 +1,5 @@
 # Fdb version 3
-["pdflatex"] 1589201906 "report.tex" "report.pdf" "report" 1589201907
+["pdflatex"] 1589248207 "report.tex" "report.pdf" "report" 1589248208
   "/etc/texmf/web2c/texmf.cnf" 1585882477 475 c0e671620eb5563b2130f56340a5fde8 ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1272929888 3287 e6b82fe08f5336d4d5ebc73fb1152e87 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1246382020 1004 54797486969f23fa377b128694d548df ""
@@ -85,18 +85,19 @@
   "/usr/share/texmf/web2c/texmf.cnf" 1503343927 31343 93828589fb0cea665e553ee5a17ad2d4 ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1588975031 127805 5c3c5fac7370b5e0b4000550316abe76 ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1585882488 718486 d7534b365fa9568f10126e12a327b4ab ""
+  "images/deepqn.png" 1589247260 30957 ce9b3e8dbca0589338f64d79c6c29e47 ""
   "images/epsilon_decay.png" 1589173634 23899 9798da5c67369c886bc960b980859e0b ""
   "images/gazebo.JPG" 1589113265 40243 45366a845c935cc6038c9dae28766ffd ""
   "images/kidney.JPG" 1589113229 35484 a793a12b56fe2e8e095503077ec53568 ""
   "images/qlearn.png" 1588838781 39684 2b5c8b474688ce144fcfdc31469bc47c ""
   "images/uon.jpeg" 1589166691 135436 3e4c5478e569c2ffa0ede33df38bfad0 ""
-  "report.aux" 1589201907 4331 8182a6948fb41f9a1f124f4dfc770744 ""
-  "report.out" 1589201907 1640 13b8117bdca1dc7437761f85f0aba177 ""
-  "report.tex" 1589201907 15114 656ee32ba6467066d572524cb4b49238 ""
-  "report.toc" 1589201907 2109 bb045dde1fd68d9407c7c79a2729e63b ""
+  "report.aux" 1589248208 4571 919e2af1abb39ea6af9d745778b38cdf ""
+  "report.out" 1589248208 1655 b9dbb3240ee63df5ff8e680a41ef5d46 ""
+  "report.tex" 1589248207 15873 8038e619e26452206b478fd87db945d1 ""
+  "report.toc" 1589248208 2128 c7bc133f835f585fcf223e4aec99406b ""
   (generated)
-  "report.log"
-  "report.pdf"
   "report.toc"
+  "report.log"
   "report.aux"
   "report.out"
+  "report.pdf"
