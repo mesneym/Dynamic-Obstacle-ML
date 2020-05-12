@@ -40,11 +40,14 @@ rosrun rqt_multiplot rqt_multiplot
 Add a curve and select the topic <b>\openai\_reward</b>
 
 ## Sample outputs:
-Refer to the directory for the videos
+Refer to the directory for the videos  
 Dynamic-Obstacle-ML/training\_ws/src/drone\_training/drone\_training/training\_results/reinforcement\_video
 
+For more videos visit this google drive link 
+https://drive.google.com/drive/folders/1C0A5qqQGMdzhqrtLpvl6iulKwg7uJopg?usp=sharing
+
 ## Report
-Refer to the directory for the report
+Refer to the directory for the report  
 /Dynamic-Obstacle-ML/report/
 
 
