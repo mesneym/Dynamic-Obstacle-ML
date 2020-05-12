@@ -43,4 +43,10 @@ Add a curve and select the topic <b>\openai\_reward</b>
 Refer to the directory for the videos
 Dynamic-Obstacle-ML/training\_ws/src/drone\_training/drone\_training/training\_results/reinforcement\_video
 
+## Report
+Refer to the directory for the report
+/Dynamic-Obstacle-ML/report/
+
+
+
 
